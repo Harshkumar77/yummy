@@ -9,53 +9,10 @@ html {
 }
 
 body {
-  color: white;
+  color: black;
   font-family: Montserrat, sans-serif;
   min-height: 100%;
-  background: rgb(15, 52, 96);
-  background-color: #1a1a2e;
-}
-
-.generator-gradient {
-  background: linear-gradient(90deg, #e94560, #0f3460);
-  background-size: 133% 133%;
-
-  -webkit-animation: AnimationName 4s ease-in-out infinite;
-  -moz-animation: AnimationName 4s ease-in-out infinite;
-  animation: AnimationName 4s ease-in-out infinite;
-}
-@-webkit-keyframes AnimationName {
-  0% {
-    background-position: 0% 19%;
-  }
-  50% {
-    background-position: 100% 82%;
-  }
-  100% {
-    background-position: 0% 19%;
-  }
-}
-@-moz-keyframes AnimationName {
-  0% {
-    background-position: 0% 19%;
-  }
-  50% {
-    background-position: 100% 82%;
-  }
-  100% {
-    background-position: 0% 19%;
-  }
-}
-@keyframes AnimationName {
-  0% {
-    background-position: 0% 19%;
-  }
-  50% {
-    background-position: 100% 82%;
-  }
-  100% {
-    background-position: 0% 19%;
-  }
+  background-color: #f7f7f7;
 }
 
 ::-webkit-scrollbar-track {

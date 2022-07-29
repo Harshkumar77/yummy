@@ -6,6 +6,7 @@ import Loader from "./components/Loader"
 import DashBoard from "./components/DashBoard"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Notfound from "./components/Notfound"
+import NewRecipie from "./components/NewRecipie"
 
 const queryClient = new QueryClient()
 
@@ -40,6 +41,7 @@ function Body() {
   return (
     <Routes>
       <Route path="/" element={<DashBoard />} />
+      <Route path="/new" element={<NewRecipie />} />
       <Route path="*" element={<Notfound />} />
     </Routes>
   )
