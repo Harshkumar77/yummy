@@ -21,7 +21,6 @@ export const configureApp = (app: Express) => {
     GOOGLE_CLIENT_SECRET,
     JWT_KEY,
     NODE_ENV,
-    IP_INFO_KEY,
   } = process.env
 
   if (
@@ -30,8 +29,7 @@ export const configureApp = (app: Express) => {
     !GOOGLE_CLIENT_ID ||
     !GOOGLE_CLIENT_SECRET ||
     !JWT_KEY ||
-    !NODE_ENV ||
-    !IP_INFO_KEY
+    !NODE_ENV
   )
     throw Error("Check enviornment variables")
 
