@@ -8,6 +8,14 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  recipies: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Recipie",
+      default: [],
+      required: true,
+    },
+  ],
 })
 
 const User = mongoose.model("User", userSchema)

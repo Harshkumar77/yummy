@@ -1,27 +1,40 @@
 import { Router } from "express"
 import Recipie from "../models/Recipie"
+import { verifyUser } from "../middleware/auth"
+import User from "../models/User"
 
 const recipieRouter = Router()
 
-recipieRouter.post("/api/recipie/add", async (req, res) => {
+recipieRouter.get("/api/recipie/:id", verifyUser, async (req, res) => {
+  res.send(await Recipie.findById(req.params.id))
+})
+
+recipieRouter.post("/api/recipie/add", verifyUser, async (req, res) => {
   if (
     !req.body.name ||
     !req.body.description ||
     !req.body.ingredients ||
-    !req.body.timeTaken
+    !req.body.timeTaken ||
+    !req.body.cover
   )
     return res.status(400)
-  const recipie = new Recipie({
+  const recipie = await new Recipie({
     name: req.body.name,
     description: req.body.description,
     timeTaken: req.body.timeTaken,
     ingredients: req.body.ingredients,
-  })
-  await recipie.save()
+    cover: req.body.cover,
+    author: req.user?.id,
+  }).save()
   res.send(recipie)
+  const user = await User.findById(req.user?.id)
+  if (user) {
+    user.recipies.push(recipie.id)
+    user.save()
+  }
 })
 
-recipieRouter.put("/api/recipie/:id", async (req, res) => {
+recipieRouter.put("/api/recipie/:id", verifyUser, async (req, res) => {
   if (
     !req.body.name ||
     !req.body.description ||
