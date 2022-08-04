@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import useRecipies from "../hooks/useRecipies"
 import Loader from "./Loader"
 
@@ -10,13 +10,14 @@ export default function RecipieList({ searchQuery }: { searchQuery: string }) {
             <div>
             </div>
             {recipies && <div className="flex flex-wrap justify-around ">
-                {recipies.map(({ name, description, ingredients, timeTaken, cover }) => (
+                {recipies.map(({ name, description, ingredients, timeTaken, cover, _id }) => (
                     <RecipieListItem
                         name={name}
                         description={description}
                         ingredients={ingredients}
                         cover={cover}
                         timeTaken={timeTaken}
+                        id={_id}
                     />
                 ))}
             </div>}
@@ -30,12 +31,14 @@ function RecipieListItem({
     ingredients,
     timeTaken,
     cover,
+    id
 }: RecipieListItemProps) {
+    const navigate = useNavigate()
     return <div onClick={() => {
-
-    }} className="p-4 shadow-md m-4 rounded-xl   hover:shadow-2xl">
+        navigate(`/recipie/${id}`)
+    }} className="p-4 shadow-md m-4 rounded-xl bg-[white]   hover:shadow-2xl">
         <img src={cover} className="w-[20rem] aspect-square object-cover" alt="" />
-        <p className="font-semibold">{name}</p>
+        <p className="font-semibold m-2">{name}</p>
     </div>
 }
 
@@ -45,4 +48,5 @@ interface RecipieListItemProps {
     description: string
     ingredients: string[]
     timeTaken: number
+    id: string
 }

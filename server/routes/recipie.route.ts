@@ -55,4 +55,8 @@ recipieRouter.put("/api/recipie/:id", verifyUser, async (req, res) => {
   res.send(recipie)
 })
 
+recipieRouter.delete("/api/recipie/:id", verifyUser, async (req, res) => {
+  res.send(await Recipie.findByIdAndDelete(req.params.id))
+})
+
 export default recipieRouter

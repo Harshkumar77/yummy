@@ -9,7 +9,10 @@ export default function Landing() {
 
 function About() {
     return <div className="sm:bg-opacity-100 bg-opacity-20 backdrop-blur-md max-w-[800px] md:mx-auto bg-secondary p-10 rounded-xl m-10">
-        <p className="text-2xl md:text-4xl text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, labore!</p>
+        <p className="text-2xl md:text-4xl text-white">Web app for Mananging all your <span className="font-bold text-primary">
+            YUMMY{" "}
+        </span>
+            recipies</p>
     </div>
 }
 

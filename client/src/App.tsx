@@ -7,6 +7,8 @@ import DashBoard from "./components/DashBoard"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Notfound from "./components/Notfound"
 import NewRecipie from "./components/NewRecipie"
+import Recipie from "./components/Recipie"
+import EditRecipie from "./components/EditRecipie"
 
 const queryClient = new QueryClient()
 
@@ -42,7 +44,10 @@ function Body() {
     <Routes>
       <Route path="/" element={<DashBoard />} />
       <Route path="/new" element={<NewRecipie />} />
+      <Route path="/recipie/:id" element={<Recipie />} />
+      <Route path="/edit/:id" element={<EditRecipie />} />
       <Route path="*" element={<Notfound />} />
+
     </Routes>
   )
 }

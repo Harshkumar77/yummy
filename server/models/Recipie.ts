@@ -1,3 +1,4 @@
+import { readFileSync } from "fs"
 import mongoose from "mongoose"
 
 const recipieSchema = new mongoose.Schema({
@@ -14,3 +15,4 @@ recipieSchema.index({ "$**": "text" })
 const Recipie = mongoose.model("Recipie", recipieSchema)
 
 export default Recipie
+

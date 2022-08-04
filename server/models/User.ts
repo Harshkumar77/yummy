@@ -1,8 +1,10 @@
+import { readFileSync } from "fs"
 import mongoose from "mongoose"
+import Recipie from "./Recipie"
 
 const userSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { unique: true, type: String, required: true },
+  name: { type: String, r: true },
+  email: { unique: true, type: String, r: true },
   profilePic: String,
   accountCreated: {
     type: Date,
@@ -13,7 +15,7 @@ const userSchema = new mongoose.Schema({
       type: mongoose.Types.ObjectId,
       ref: "Recipie",
       default: [],
-      required: true,
+      r: true,
     },
   ],
 })
@@ -27,11 +29,14 @@ export async function findOrCreateUser(
 ) {
   const existingUser = await User.findOne({ email })
   if (existingUser !== null) return existingUser
-  return await User.create({
+  const newUser = await User.create({
     name,
     email,
     profilePic,
   })
+  newUser.recipies = await NewRecipiesId(newUser.id)
+  newUser.save()
+  return newUser
 }
 
 export default User
@@ -42,4 +47,23 @@ declare global {
       id: string
     }
   }
+}
+
+function NewRecipiesId(id: any) {
+  const initialRecipies = JSON.parse(
+    readFileSync("data/initialRecipies.json").toString()
+  )
+  return Promise.all(
+    initialRecipies.map(async (r: any) => {
+      const recipie = await new Recipie({
+        name: r.name,
+        description: r.description,
+        timeTaken: r.timeTaken,
+        ingredients: r.ingredients,
+        cover: r.cover,
+        author: id,
+      }).save()
+      return recipie.id
+    })
+  )
 }

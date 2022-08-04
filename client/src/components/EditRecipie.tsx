@@ -5,17 +5,16 @@ import { useState } from "react"
 import { storage } from "../firebase"
 import request from "../utils/axios"
 import { onValueChangeHandlerRecipie } from "../utils/handler"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import useRecipie from "../hooks/useRecipie";
+import Loader from "./Loader";
 
-export default function NewRecipie() {
-    const [userInput, setUserInput] = useState({
-        name: "Name of the recipie",
-        cover: "/assets/default.jpg",
-        description: "Add steps here",
-        ingredients: ["Add ingridents"],
-        timeTaken: 10,
-    })
-
+export default function EditRecipie() {
+    const { id } = useParams<{ id: string }>()
+    const { isLoading, data } = useRecipie(id as string)
+    if (isLoading)
+        <Loader />
+    const [userInput, setUserInput] = useState(data!)
     const navigate = useNavigate()
 
     return (
@@ -51,8 +50,8 @@ export default function NewRecipie() {
                         return
                     }
                     await request
-                        .post("/api/recipie/add", userInput)
-                    navigate("/")
+                        .put(`/api/recipie/${id}`, userInput)
+                    navigate(`/recipie/${id}`)
                 }}
                 className="p-2 text-xl bg-primary text-[white] font-bold m-2 rounded-lg"
             >
@@ -90,7 +89,7 @@ function IngredientsInput({ userInput, setUserInput }: any) {
                                 })
                             }
                         >
-                            <TiDeleteOutline className="text-3xl" />
+                            <TiDeleteOutline className="text-3xl hover:text-[red]" />
                         </button>
                     </div>
                 ))}
@@ -104,7 +103,7 @@ function IngredientsInput({ userInput, setUserInput }: any) {
                         })
                     }}
                 >
-                    <AiOutlinePlusCircle className="text-3xl" />
+                    <AiOutlinePlusCircle className="text-3xl hover:text-[blue]" />
                 </button>
             </div>
         </>
@@ -115,7 +114,7 @@ function CoverUploader({ userInput, setUserInput }: any) {
     return (
         <div className="text-center m-2 p-2">
             <img src={userInput.cover} className="w-2/5 p-2 mx-auto aspect-square object-cover" />
-            {userInput.cover === "/assets/default.jpg" && (
+            {/* {userInput.cover === "/assets/default.jpg" && (
                 <div className="m-2 p-2 flex items-center justify-around">
                     <p>Add picture of recipie here :</p>
                     <input
@@ -128,7 +127,7 @@ function CoverUploader({ userInput, setUserInput }: any) {
                         }}
                     />
                 </div>
-            )}
+            )} */}
         </div>
     )
 }
